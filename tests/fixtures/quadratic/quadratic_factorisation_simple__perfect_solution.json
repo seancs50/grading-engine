@@ -1,0 +1,9 @@
+{
+  "family_id": "quadratic_factorisation_simple",
+  "question_id": "solve_x2_plus_5x_plus_6_equals_0",
+  "student_steps": [
+    "x^2 + 5x + 6 = 0",
+    "(x + 2)(x + 3) = 0",
+    "x = -2 or x = -3"
+  ]
+}
