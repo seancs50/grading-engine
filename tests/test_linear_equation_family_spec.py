@@ -247,13 +247,13 @@ def test_path_binding_rules_define_deterministic_tiebreakers() -> None:
     assert "FT MUST apply only within one single bound path." in binding_rules
 
 
-def test_ft_source_definition_allows_only_unique_attachable_isolated_term_sources() -> None:
+def test_ft_source_definition_allows_only_unique_derivable_isolated_term_sources() -> None:
     ft_predicate_block = _extract_heading_block(
         r"### Family Evidence Predicates Used by Dependencies",
         r"### Path Selection and Binding Rules",
     )
     assert (
-        "produced by a parseable transition OR a standalone equation state that is uniquely attachable"
+        "produced by a parseable transition OR a standalone equation state that is uniquely derivable as one isolated-term state from the canonical prompt state without introducing alternative valid transformations"
         in ft_predicate_block
     )
     assert (
