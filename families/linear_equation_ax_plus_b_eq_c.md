@@ -30,6 +30,8 @@ This family MUST NOT be selected if any condition above is false.
 
 The surface prompt form MUST match one of the forms below and no other form:
 
+If the surface prompt form does not exactly match one allowed surface form below, family selection MUST fail before normalization.
+
 - `ax + b = c`
 - `ax - d = c`, where normalization sets `b = -d`
 - `-ax + b = c`
@@ -223,6 +225,8 @@ The target `q` MUST be exactly one of the forms below:
 - `(c - b) / a`
 - `k / a`, where `k` is the exact canonical integer value `c - b`
 
+If `k` is used in `x = k / a`, then `k` MUST be the exact evaluated integer equal to `c - b`. No partially evaluated symbolic form other than exact grouped `(c - b)` is allowed.
+
 If the prompt surface form was `ax - d = c`, the grouped numerator MAY appear as `c + d`, but that surface form MUST normalize to the same exact canonical family-structured representation as `c - b`.
 
 #### Visible-Method Requirements
@@ -235,6 +239,8 @@ If the prompt surface form was `ax - d = c`, the grouped numerator MAY appear as
 #### Compressed-Working Rules
 
 This route is the only accepted cross-step compressed form in this family.
+
+One grouped-solve transition MAY satisfy both `M1` and `M2` simultaneously if and only if it satisfies both atom success predicates.
 
 This route MUST NOT accept a target state that removes the visible denominator or hides the grouped inverse-constant structure.
 
@@ -260,7 +266,7 @@ This family contains exactly three atoms and no `B` atoms.
 - there is exactly one earlier parseable state `Sft` of form `a*x = k_ft`
 - the coefficient of `x` in `Sft` is the exact original prompt coefficient `a`
 - `k_ft` is an exact scalar value
-- `Sft` is produced by a parseable transition OR a standalone equation state that is uniquely attachable to the canonical prompt state as an isolated-term form
+- `Sft` is produced by a parseable transition OR a standalone equation state that is uniquely derivable as one isolated-term state from the canonical prompt state without introducing alternative valid transformations
 - `k_ft != c - b`
 
 If no transition is present, `Sft` MUST still be uniquely derivable from the canonical prompt form as one isolated-term state with unchanged coefficient `a`.
@@ -287,9 +293,9 @@ FT MUST apply only within one single bound path.
 - `dependencies`: `none`
 - `path binding rule`: bind to the unique path containing the earliest canonical prompt state and the earliest later transition from that state that is a candidate for `R1` step 1 or `R2`
 - `evidence rule`: one parseable transition from the canonical prompt state either to an isolated-term state for `R1` or to one grouped final state for `R2`
-- `success predicate`: `M1` is awarded if and only if one of the conditions below is true:
-- `success predicate`: for `R1`, the transition target is exactly `a*x = c - b` after canonical integer evaluation
-- `success predicate`: for `R2`, the transition target is exactly `x = (c - b) / a` or `x = k / a` with visible denominator `a` and exact canonical `k = c - b`
+- `success predicate`: `M1` is awarded if and only if exactly one of the following holds:
+- `success predicate`: `R1` condition: the transition target is exactly `a*x = c - b` after canonical integer evaluation
+- `success predicate`: `R2` condition: the transition target is exactly `x = (c - b) / a` or `x = k / a` with visible denominator `a` and exact canonical `k = c - b`
 - `withhold predicates`: `withhold.no_visible_method` if the path contains only a final answer state or other state-only evidence with no supported transition from the prompt state
 - `withhold predicates`: `withhold.invalid_method` if the transition is parseable as an `R1` or `R2` candidate but the algebra or arithmetic is invalid
 - `withhold predicates`: `withhold.insufficient_evidence` if no parseable supported transition exists and no escalation predicate is true
